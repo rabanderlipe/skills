@@ -7,6 +7,7 @@
   },
   "repository": "https://github.com/rabanderlipe/skills",
   "homepage": "https://github.com/rabanderlipe/skills#codebase-cleanup",
+  "license": "MIT",
   "keywords": [
     "dead-code",
     "tech-debt",

@@ -1,9 +1,18 @@
 {
   "name": "ship-task",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Push the current task branch, open a PR, watch checks, squash-merge, sync the default branch and clean up.",
   "author": {
     "name": "Reno Angelo Banderlipe"
   },
-  "repository": "https://github.com/rabanderlipe/skills"
+  "repository": "https://github.com/rabanderlipe/skills",
+  "license": "MIT",
+  "homepage": "https://github.com/rabanderlipe/skills#ship-task",
+  "keywords": [
+    "git",
+    "github",
+    "pull-request",
+    "merge",
+    "workflow"
+  ]
 }
