@@ -1,0 +1,9 @@
+# Personal Claude Code settings (can hold tokens or local paths)
+.claude/settings.local.json
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+.DS_Store
