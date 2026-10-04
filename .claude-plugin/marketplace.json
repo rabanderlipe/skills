@@ -1,6 +1,11 @@
 {
   "name": "rabanderlipe",
-  "owner": { "name": "Reno Angelo Banderlipe" },
+  "owner": {
+    "name": "Reno Angelo Banderlipe"
+  },
+  "metadata": {
+    "description": "Claude Code plugins by @rabanderlipe."
+  },
   "plugins": [
     {
       "name": "ship-task",
