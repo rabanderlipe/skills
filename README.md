@@ -12,7 +12,7 @@ Claude Code plugins by [@rabanderlipe](https://github.com/rabanderlipe).
 
 `/ship-task:ship-task "<conventional-commit PR title>"` — preflight, rebase on the default branch, push, open a PR, watch checks, squash-merge, sync and clean up. Needs `gh` signed in.
 
-Preflight runs the command your `CLAUDE.md` or `AGENTS.md` names (e.g. `Preflight: make check`); otherwise the `lint`, `typecheck`, `test` and `build` scripts that exist in `package.json`.
+Preflight runs the command your `CLAUDE.md` or `AGENTS.md` names (e.g. `Preflight: make check`); otherwise the `lint`, `typecheck`, `test` and `build` scripts that exist in `package.json`, or the project's obvious equivalents (`make check`, `cargo test`, `go test ./...`, `pytest`). It stops instead of improvising when something unexpected happens: rebase conflicts that need a judgement call, failing checks it can't fix, or a merge blocked by branch protection.
 
 ## codebase-cleanup
 
