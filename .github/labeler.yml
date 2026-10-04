@@ -1,0 +1,30 @@
+plugin:ship-task:
+  - changed-files:
+    - any-glob-to-any-file: 'plugins/ship-task/**'
+
+plugin:codebase-cleanup:
+  - changed-files:
+    - any-glob-to-any-file: 'plugins/codebase-cleanup/**'
+
+marketplace:
+  - changed-files:
+    - any-glob-to-any-file: '.claude-plugin/**'
+
+evals:
+  - changed-files:
+    - any-glob-to-any-file: 'evals/**'
+
+claude-config:
+  - changed-files:
+    - any-glob-to-any-file: '.claude/**'
+    - any-glob-to-any-file: 'CLAUDE.md'
+
+ci/cd:
+  - changed-files:
+    - any-glob-to-any-file: '.github/**'
+    - any-glob-to-any-file: '.githooks/**'
+
+documentation:
+  - changed-files:
+    - any-glob-to-any-file: 'README.md'
+    - any-glob-to-any-file: 'LICENSE'
