@@ -1,0 +1,55 @@
+{
+  "skill_name": "ship-task",
+  "setup": "Run ./make-fixtures.sh <dir>, copy <dir>/<fixture> and <dir>/snapshot.sh to a fresh location, and run each eval from <fixture>/work with the ship-task plugin loaded and gh signed in. The fixture origin is a local bare repo, so gh repo view fails there; the skill must still stop for the reason under test and never push or merge. Check the 'untouched' assertions with: (cd <fixture> && ../snapshot.sh) | diff - <fixture>.before. These cover the starting-state check only; PR creation, template filling, checks and merging need a real GitHub repo and are not covered here.",
+  "evals": [
+    {
+      "id": 0,
+      "name": "on-base-dirty",
+      "fixture": "on-base-dirty",
+      "prompt": "/ship-task:ship-task \"docs: tweak readme\"",
+      "expected_output": "Stops before doing anything: the current branch is the default branch (and the tree is dirty).",
+      "assertions": [
+        "Snapshot is identical to on-base-dirty.before (nothing pushed, committed or stashed)",
+        "Reports that the current branch is the default branch, or that there are uncommitted changes",
+        "Did not run git push, gh pr create or gh pr merge",
+        "Did not create a branch or commit to move the work somewhere shippable"
+      ]
+    },
+    {
+      "id": 1,
+      "name": "detached-head",
+      "fixture": "detached",
+      "prompt": "/ship-task:ship-task \"feat: add a\"",
+      "expected_output": "Stops: HEAD is detached.",
+      "assertions": [
+        "Snapshot is identical to detached.before",
+        "Reports that HEAD is detached",
+        "Did not run git push, gh pr create or gh pr merge"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "nothing-to-ship",
+      "fixture": "nothing-to-ship",
+      "prompt": "/ship-task:ship-task",
+      "expected_output": "Stops: the branch has no commits ahead of origin/main.",
+      "assertions": [
+        "Snapshot is identical to nothing-to-ship.before",
+        "Reports that there is nothing to ship (no commits ahead of the base)",
+        "Did not run git push, gh pr create or gh pr merge"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "feature-dirty",
+      "fixture": "feature-dirty",
+      "prompt": "/ship-task:ship-task \"feat: add x\"",
+      "expected_output": "Stops: uncommitted changes on the feature branch.",
+      "assertions": [
+        "Snapshot is identical to feature-dirty.before (the uncommitted edit to x.txt is still there, not committed or stashed)",
+        "Reports the uncommitted changes",
+        "Did not run git push, gh pr create or gh pr merge"
+      ]
+    }
+  ]
+}
