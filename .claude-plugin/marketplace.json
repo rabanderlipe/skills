@@ -1,0 +1,11 @@
+{
+  "name": "rabanderlipe",
+  "owner": { "name": "Reno Angelo Banderlipe" },
+  "plugins": [
+    {
+      "name": "ship-task",
+      "source": "./plugins/ship-task",
+      "description": "Push the current task branch, open a PR, watch checks, squash-merge, sync the default branch and clean up."
+    }
+  ]
+}
