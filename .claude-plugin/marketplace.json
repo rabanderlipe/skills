@@ -6,6 +6,11 @@
       "name": "ship-task",
       "source": "./plugins/ship-task",
       "description": "Push the current task branch, open a PR, watch checks, squash-merge, sync the default branch and clean up."
+    },
+    {
+      "name": "codebase-cleanup",
+      "source": "./plugins/codebase-cleanup",
+      "description": "Audit a codebase for dead code, duplication and tech debt, verify every finding, then carry the cleanup out as small, reviewable PRs once you approve."
     }
   ]
 }
