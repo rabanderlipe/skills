@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Scans staged changes for secrets with betterleaks before each commit.
+# Enable once per clone: git config core.hooksPath .githooks
+set -euo pipefail
+if ! command -v betterleaks >/dev/null 2>&1; then
+  echo "pre-commit: betterleaks not installed, skipping secret scan (brew install betterleaks)" >&2
+  exit 0
+fi
+exec betterleaks git --pre-commit --staged --no-banner --redact --log-level warn .
