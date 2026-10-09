@@ -1,0 +1,9 @@
+{
+  "name": "agent-team",
+  "version": "0.1.0",
+  "description": "Run a planner-led agent team (PM, lead engineer, engineers, QA) that message each other, with each teammate's model picked by what its task needs.",
+  "author": {
+    "name": "Reno Angelo Banderlipe"
+  },
+  "repository": "https://github.com/rabanderlipe/skills"
+}

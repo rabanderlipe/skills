@@ -16,6 +16,11 @@
       "name": "codebase-cleanup",
       "source": "./plugins/codebase-cleanup",
       "description": "Audit a codebase for dead code, duplication and tech debt, verify every finding, then carry the cleanup out as small, reviewable PRs once you approve."
+    },
+    {
+      "name": "agent-team",
+      "source": "./plugins/agent-team",
+      "description": "Run a planner-led agent team (PM, lead engineer, engineers, QA) that message each other, with each teammate's model picked by what its task needs."
     }
   ]
 }

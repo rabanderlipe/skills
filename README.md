@@ -6,6 +6,7 @@ Claude Code plugins by [@rabanderlipe](https://github.com/rabanderlipe).
 /plugin marketplace add rabanderlipe/skills
 /plugin install ship-task@rabanderlipe
 /plugin install codebase-cleanup@rabanderlipe
+/plugin install agent-team@rabanderlipe
 ```
 
 ## ship-task
@@ -26,3 +27,13 @@ It works with any language. The tool and framework examples lean JS/TS but adapt
 ## License
 
 [MIT](LICENSE)
+
+## agent-team
+
+`/agent-team:team "<feature or bug>"` runs a planner-led agent team. Your session is the planner. It spawns a `pm`, a `lead-engineer`, one `engineer` per task and a `qa` as teammates, which share a task list and message each other by name. The flow is PM acceptance criteria, then the lead engineer's plan split into tasks that touch separate files, then engineers building test-first, lead review, QA with evidence for each criterion, and PM sign-off. It never commits; you ship when you're ready.
+
+The planner chooses a model for each teammate from what its task needs. Opus handles architecture, security, migrations and unexplained bugs; Sonnet handles well-specified implementation, QA and scoping; Haiku handles mechanical edits. The lead engineer recommends a model for each engineering task. A teammate that stalls or fails review is respawned one tier up.
+
+Needs agent teams turned on, which is experimental: add `"env": {"CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"}` to `~/.claude/settings.json` and restart Claude Code.
+
+Every role reads your `CLAUDE.md`/`AGENTS.md`. For project-specific rules (spec files, test commands, review checklists, skills per kind of work, model overrides), copy [`team.example.md`](plugins/agent-team/team.example.md) to `.claude/team.md` in the project.
