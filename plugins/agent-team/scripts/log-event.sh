@@ -11,7 +11,7 @@ jq -c --arg ts "$(date -u +%Y-%m-%dT%H:%M:%SZ)" '{
     event: .hook_event_name,
     cwd: .cwd,
     session: .session_id,
-    teammate: (.teammate_name // "lead"),
+    teammate: (.teammate_name // "planner"),
     task_id: (.task_id // null),
     task: (.task_subject // null)
   }' <<<"$input" >>"$dir/log.jsonl" 2>/dev/null

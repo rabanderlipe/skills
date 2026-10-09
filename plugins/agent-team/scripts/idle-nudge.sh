@@ -14,9 +14,9 @@ mark="$dir/$session-$teammate"
 [[ -e $mark ]] && exit 0
 touch "$mark"
 cat >&2 <<MSG
-Before you go idle: if your task is done, make sure you sent your report (what changed,
-commands run and their results) to whoever handed you the task and marked the task
-completed. If you are blocked, message the lead with the blocker and what you need.
-If both are already done, you can go idle now.
+Before going idle, check your role's "Done when" line. If it is met, make sure your
+output file is written, your shared task (if any) is marked completed, and you messaged
+its path and evidence to whoever handed you the work. If you are blocked, message the
+planner with the blocker and what you need. If all of that is already done, go idle.
 MSG
 exit 2

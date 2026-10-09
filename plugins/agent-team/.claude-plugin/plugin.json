@@ -1,7 +1,7 @@
 {
   "name": "agent-team",
   "version": "0.1.0",
-  "description": "Run a planner-led agent team (PM, lead engineer, engineers, QA) that message each other, with each teammate's model picked by what its task needs.",
+  "description": "A planner that decides whether a task needs an agent team, then runs one (PM, researcher, tech lead, devil's advocate, engineers, reviewers, QA, tech writer) with a model picked per task, evidence-based handoffs and a quality gate.",
   "author": {
     "name": "Reno Angelo Banderlipe"
   },

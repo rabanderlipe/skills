@@ -30,24 +30,22 @@ It works with any language. The tool and framework examples lean JS/TS but adapt
 
 ## agent-team
 
-`/agent-team:team "<feature or bug>"` runs a planner-led agent team. Your session is the planner. It spawns teammates that share a task list and message each other by name:
+`/agent-team:team "<feature or bug>"` runs a planner-led agent team. Your session is the **planner**. It first decides whether a team pays off at all. Teams cost several times the tokens of one session, so a one-line fix runs **Solo** in your session. A single risky task gets a **Pair**: one engineer plus QA and reviewers. Independent slices or open unknowns get the **Full** team:
 
-- **pm**: scope and acceptance criteria, and the final sign-off.
-- **researcher**: answers open questions from primary sources into `docs/research/`, using `/mattpocock-skills:research` when it's installed.
-- **lead-engineer**: plans tasks that touch separate files, recommends a model for each, and reviews.
-- **devils-advocate**: grills the plan before any code, using `/mattpocock-skills:grilling` when it's installed.
-- **engineer** (one per task): builds test-first.
-- **your project's reviewers**: any agent types listed in `.claude/team.md`.
-- **security**: only for auth, permissions, secrets or input handling.
-- **qa**: checks each acceptance criterion with evidence.
-- **tech-writer**: brings docs up to date after sign-off.
+- **pm**: observable acceptance criteria checked against your spec, and sign-off against QA's evidence.
+- **researcher**: cited answers from primary sources in `docs/research/`, using `/mattpocock-skills:research` when it's installed.
+- **tech-lead**: a plan of tasks that touch separate files, each with a contract, a check and a recommended model. It also reviews every diff.
+- **devils-advocate**: tries to break the plan before any code exists, using `/mattpocock-skills:grilling` when it's installed.
+- **engineer** (one per task): builds test-first and reports evidence.
+- **your project's reviewers**, plus **security** for auth, permissions, secrets or input: fresh reviewers that judge the diff against the criteria, not the plan.
+- **qa**: a ✅/❌ verdict per criterion, backed by commands it ran itself.
+- **tech-writer**: updates docs after sign-off.
 
-The planner spawns only the roles a task needs. It never commits; you ship when you're ready.
+Teammates write their output to a run folder (`~/.claude/agent-team/runs/…`) and pass file paths instead of pasting content into messages. The planner waits and checks each handoff against the criteria instead of writing code. The planner names a model for every teammate based on its task: Opus for architecture, security, migrations, money or date logic and adversarial review; Sonnet for well-specified building, QA and scoping; Haiku for mechanical edits and single lookups. A teammate that stalls or fails review is respawned one tier up. The final report has a table of every teammate with its model, the reason for it, respawns and time taken. Token counts per teammate aren't available, so use `/usage` for totals. It never commits; you ship when you're ready.
 
-The planner chooses each teammate's model from what its task needs. Opus handles architecture, security, migrations and unexplained bugs; Sonnet handles well-specified implementation, QA and scoping; Haiku handles mechanical edits. A teammate that stalls or fails review is respawned one tier up. The final report has a table of every teammate with its model, the reason for it, respawns and time taken. Token counts per teammate aren't available, so use `/usage` for totals.
+Hooks enforce a quality gate. When an engineer marks its task done, your project's `.claude/team-gate.sh` runs, and a failure keeps the task open and sends the output back to the engineer. A teammate's first idle sends it back once to check its "done" condition. When tasks can't be split across separate files, **worktree mode** gives each engineer its own worktree and `team/<name>` branch, and the planner merges them after review.
 
-Hooks enforce a quality gate. When an engineer marks a task done, your project's `.claude/team-gate.sh` runs, and a failure keeps the task open. A teammate's first idle sends it back once to report or flag its blocker. When tasks can't be split across separate files, **worktree mode** gives each engineer its own git worktree and branch, and the planner merges them after review.
-
-Needs agent teams turned on, which is experimental: add `"env": {"CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"}` to `~/.claude/settings.json` and restart Claude Code.
-
-Every role reads your `CLAUDE.md`/`AGENTS.md`. For project-specific rules, copy [`team.example.md`](plugins/agent-team/team.example.md) to `.claude/team.md`, and [`team-gate.example.sh`](plugins/agent-team/team-gate.example.sh) to `.claude/team-gate.sh`.
+Setup:
+- Turn on agent teams, which are experimental: add `"env": {"CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"}` to `~/.claude/settings.json` and restart Claude Code.
+- Optional: copy [`team.example.md`](plugins/agent-team/team.example.md) to `.claude/team.md` for project rules (sources of truth, commands, reviewers, skills, what QA checks, worktree safety, model overrides), and [`team-gate.example.sh`](plugins/agent-team/team-gate.example.sh) to `.claude/team-gate.sh`.
+- Optional: teammates waiting on each other lose their prompt cache after 5 minutes. Setting `"subagentPromptCacheTtl": "1h"` in settings keeps it warm between handoffs.
