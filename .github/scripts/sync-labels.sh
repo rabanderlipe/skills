@@ -7,6 +7,7 @@ while IFS='|' read -r name color desc; do
 done <<'LABELS'
 plugin:ship-task|7057FF|Changes to the ship-task plugin
 plugin:codebase-cleanup|E99695|Changes to the codebase-cleanup plugin
+plugin:agent-team|0E8A16|Changes to the agent-team plugin
 marketplace|FBCA04|Marketplace manifest (.claude-plugin/)
 evals|0E8A16|Eval suites and fixtures
 claude-config|D97706|Claude Code setup: .claude/ and CLAUDE.md

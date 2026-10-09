@@ -6,6 +6,10 @@ plugin:codebase-cleanup:
   - changed-files:
     - any-glob-to-any-file: 'plugins/codebase-cleanup/**'
 
+plugin:agent-team:
+  - changed-files:
+    - any-glob-to-any-file: 'plugins/agent-team/**'
+
 marketplace:
   - changed-files:
     - any-glob-to-any-file: '.claude-plugin/**'
