@@ -1,0 +1,34 @@
+{
+  "solo": {
+    "prompt": "/agent-team:team Fix the typo 'Recieved' in src/messages.js",
+    "expect": "Solo: the planner fixes it itself and spawns no teammates.",
+    "answer_questions": false
+  },
+  "full": {
+    "prompt": "/agent-team:team Add expense splitting (splitExpense and shareOf, spec section Splitting) and the formatPeso display helper (spec section Formatting).",
+    "hidden": [
+      "split"
+    ],
+    "expect": "Full or Pair+: pm criteria, tech-lead plan, engineers on separate files, qa evidence, report with model table; hidden tests pass; spec untouched."
+  },
+  "gate": {
+    "prompt": "/agent-team:team Add refunds as described in the spec section Refunds. Run it with a team (Pair at least), not Solo: I want the engineer and QA roles exercised.",
+    "hidden": [
+      "refund"
+    ],
+    "expect": "Pair or Full (explicitly requested). The gate's JSDoc rule refuses the engineer's first finish; the engineer fixes it and the gate passes."
+  },
+  "worktree": {
+    "prompt": "/agent-team:team Add refunds (spec section Refunds) and expense categories with totalsByCategory (spec section Categories and totals). Use the full team with one engineer per feature, even though both touch src/ledger.js.",
+    "hidden": [
+      "refund",
+      "categories"
+    ],
+    "expect": "Worktree mode (on in team.md): engineers work on team/<name> branches in their own worktrees; the planner merges and removes them."
+  },
+  "parked": {
+    "prompt": "/agent-team:team Add multi-currency support so expenses can be recorded in USD or JPY.",
+    "expect": "The pm flags it as parked; the planner stops and asks the user; no code changes and no engineers.",
+    "answer_questions": false
+  }
+}

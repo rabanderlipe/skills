@@ -28,8 +28,9 @@
         "hooks": [
           {
             "type": "command",
-            "command": "\"${CLAUDE_PLUGIN_ROOT}\"/scripts/idle-nudge.sh",
-            "timeout": 10
+            "command": "\"${CLAUDE_PLUGIN_ROOT}\"/scripts/teammate-idle.sh",
+            "timeout": 900,
+            "statusMessage": "Running the team quality gate"
           }
         ]
       }

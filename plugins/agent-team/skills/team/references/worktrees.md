@@ -6,4 +6,4 @@ Default: engineers share the checkout and own disjoint files. Use worktree mode 
 - Put `worktree mode` in each engineer's spawn prompt. The engineer creates `../<repo>-<name>` on branch `team/<name>`, works and commits only there, and reports the branch.
 - The quality gate runs inside that worktree.
 - The tech-lead reviews with `git diff <base>...team/<name>`.
-- Before qa, merge the `team/*` branches into the current branch in dependency order, resolve conflicts (ask the user when a conflict needs a product or design call), run the gate once on the merged result, then `git worktree remove` each worktree and delete its branch.
+- Before qa, bring each branch back in dependency order with `git merge --squash team/<name>` followed by `git reset -q` (its changes land in the working tree uncommitted, so nothing is committed without the user). Resolve conflicts, asking the user when one needs a product or design call. Run the gate once on the result, then `git worktree remove ../<repo>-<name>` and `git branch -D team/<name>` for each. This is part of every worktree run, not a step that waits for the user.

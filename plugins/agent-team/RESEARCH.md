@@ -15,4 +15,11 @@ Sources behind the design, checked 2026-10-09. Update this file when a design ch
 | Quality gate on TaskCompleted, one idle nudge | Exit 2 on TaskCompleted keeps the task open; on TeammateIdle it keeps the teammate working ([hooks](https://code.claude.com/docs/en/hooks)). Verified 2026-10-09: plugin TaskCreated/TaskCompleted hooks fire and a failing gate leaves the task pending. |
 | Researcher works in the foreground | In-process teammates cannot run background subagents ([agent-teams](https://code.claude.com/docs/en/agent-teams)). Verified: a plugin agent sees the Skill tool, other plugins' skills and SendMessage. |
 
-Not yet verified in a live interactive team: hooks firing inside teammate sessions, and teammates (as opposed to subagents) invoking other plugins' skills.
+## Verified end to end (2026-10-09, Claude Code 2.1.295)
+
+`evals/agent-team/run-all.sh` drove real interactive sessions (agent teams on, auto permission mode) against five sandbox repos with hidden acceptance tests. Final run: solo 8/8, parked 8/8, full 22/22, worktree 27/27, gate 24/24.
+
+- TaskCreated, TaskCompleted and TeammateIdle plugin hooks fire inside teammate sessions, and the gate's refusal reaches the engineer's own transcript.
+- The shared task list needs `CLAUDE_CODE_ENABLE_TODO_TOOLS=1` on Claude 5.x models (the Task tools are off by default there). Without it the gate still runs on TeammateIdle.
+- Teammates honour the spawn-prompt model. A mod's `agent.spawn` hook that only sets a model when none is given (like model-router) leaves the planner's choice alone.
+- The stress test changed the design in four places: the idle-time gate, squash-merging worktree branches into uncommitted changes, deciding questions that have a clear default instead of asking, and the task-tools preflight.
