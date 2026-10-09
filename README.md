@@ -30,10 +30,24 @@ It works with any language. The tool and framework examples lean JS/TS but adapt
 
 ## agent-team
 
-`/agent-team:team "<feature or bug>"` runs a planner-led agent team. Your session is the planner. It spawns a `pm`, a `lead-engineer`, one `engineer` per task and a `qa` as teammates, which share a task list and message each other by name. The flow is PM acceptance criteria, then the lead engineer's plan split into tasks that touch separate files, then engineers building test-first, lead review, QA with evidence for each criterion, and PM sign-off. It never commits; you ship when you're ready.
+`/agent-team:team "<feature or bug>"` runs a planner-led agent team. Your session is the planner. It spawns teammates that share a task list and message each other by name:
 
-The planner chooses a model for each teammate from what its task needs. Opus handles architecture, security, migrations and unexplained bugs; Sonnet handles well-specified implementation, QA and scoping; Haiku handles mechanical edits. The lead engineer recommends a model for each engineering task. A teammate that stalls or fails review is respawned one tier up.
+- **pm**: scope and acceptance criteria, and the final sign-off.
+- **researcher**: answers open questions from primary sources into `docs/research/`, using `/mattpocock-skills:research` when it's installed.
+- **lead-engineer**: plans tasks that touch separate files, recommends a model for each, and reviews.
+- **devils-advocate**: grills the plan before any code, using `/mattpocock-skills:grilling` when it's installed.
+- **engineer** (one per task): builds test-first.
+- **your project's reviewers**: any agent types listed in `.claude/team.md`.
+- **security**: only for auth, permissions, secrets or input handling.
+- **qa**: checks each acceptance criterion with evidence.
+- **tech-writer**: brings docs up to date after sign-off.
+
+The planner spawns only the roles a task needs. It never commits; you ship when you're ready.
+
+The planner chooses each teammate's model from what its task needs. Opus handles architecture, security, migrations and unexplained bugs; Sonnet handles well-specified implementation, QA and scoping; Haiku handles mechanical edits. A teammate that stalls or fails review is respawned one tier up. The final report has a table of every teammate with its model, the reason for it, respawns and time taken. Token counts per teammate aren't available, so use `/usage` for totals.
+
+Hooks enforce a quality gate. When an engineer marks a task done, your project's `.claude/team-gate.sh` runs, and a failure keeps the task open. A teammate's first idle sends it back once to report or flag its blocker. When tasks can't be split across separate files, **worktree mode** gives each engineer its own git worktree and branch, and the planner merges them after review.
 
 Needs agent teams turned on, which is experimental: add `"env": {"CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"}` to `~/.claude/settings.json` and restart Claude Code.
 
-Every role reads your `CLAUDE.md`/`AGENTS.md`. For project-specific rules (spec files, test commands, review checklists, skills per kind of work, model overrides), copy [`team.example.md`](plugins/agent-team/team.example.md) to `.claude/team.md` in the project.
+Every role reads your `CLAUDE.md`/`AGENTS.md`. For project-specific rules, copy [`team.example.md`](plugins/agent-team/team.example.md) to `.claude/team.md`, and [`team-gate.example.sh`](plugins/agent-team/team-gate.example.sh) to `.claude/team-gate.sh`.
